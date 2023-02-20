@@ -3,6 +3,7 @@
 
 import pygame
 import math
+import random
 
 # Define colors
 BLACK = (0, 0, 0)
@@ -12,25 +13,29 @@ WHITE = (255, 255, 255)
 pygame.init()
 
 # Set the dimensions of the screen
-SCREEN_WIDTH = 600
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 900
+SCREEN_HEIGHT = 900
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-# Define the parameters for the spirograph
-R1 = int(input("Enter the radius of the first wheel: "))
-R2 = int(input("Enter the radius of the second wheel: "))
-R3 = int(input("Enter the radius of the third wheel: "))
-P = int(input("Enter the number of points to draw: "))
-K = float(R2 / R1)
 
 # Set the scale and the line width
 scale = 0.3
-line_width = 1
+line_width = 2
 
 # Set the initial values for the angles
 theta1 = 0
 theta2 = 0
 theta3 = 0
+
+# Set the initial values for the wheel radii
+R1 = random.randint(25, 150)
+R2 = random.randint(25, 150)
+R3 = random.randint(25, 150)
+
+# Set the time interval for generating new random wheel sizes
+GENERATE_NEW_SIZES_INTERVAL = 10000  # milliseconds
+
+# Set the initial time for generating new random wheel sizes
+next_generate_new_sizes_time = pygame.time.get_ticks() + GENERATE_NEW_SIZES_INTERVAL
 
 # Start the loop for drawing the spirograph
 running = True
@@ -43,17 +48,29 @@ while running:
     center_x = SCREEN_WIDTH // 2
     center_y = SCREEN_HEIGHT // 2
 
+    # Draw the wheels
+    # pygame.draw.circle(screen, BLACK, (center_x, center_y), R1, line_width)
+    # pygame.draw.circle(screen, BLACK, (int(center_x + (R1 + R2)), center_y), R2, line_width)
+    # pygame.draw.circle(screen, BLACK, (int(center_x + (R1 + R2) + R3), center_y), R3, line_width)
+
     # Calculate the spirograph coordinates and draw the lines
-    for i in range(P):
+    for i in range(1000):
         x = int(center_x + (R1 + R2) * math.cos(theta1) + R3 * math.cos(theta3))
         y = int(center_y + (R1 + R2) * math.sin(theta1) + R3 * math.sin(theta3))
         theta1 += scale
-        theta2 += scale * K
+        theta2 += scale * (R1 / R2)
         theta3 += scale * (R2 / R3)
         if i == 0:
             old_x, old_y = x, y
         pygame.draw.line(screen, BLACK, (old_x, old_y), (x, y), line_width)
         old_x, old_y = x, y
+
+    # Generate new random wheel sizes if the time has come
+    if pygame.time.get_ticks() >= next_generate_new_sizes_time:
+        R1 = random.randint(50, 150)
+        R2 = random.randint(50, 150)
+        R3 = random.randint(50, 150)
+        next_generate_new_sizes_time += GENERATE_NEW_SIZES_INTERVAL
 
     # Update the screen
     pygame.display.flip()
@@ -65,3 +82,4 @@ while running:
 
 # Quit Pygame
 pygame.quit()
+
