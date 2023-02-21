@@ -13,8 +13,8 @@ WHITE = (255, 255, 255)
 pygame.init()
 
 # Set the dimensions of the screen
-SCREEN_WIDTH = 900
-SCREEN_HEIGHT = 900
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 1000
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Set the scale and the line width
@@ -27,12 +27,12 @@ theta2 = 0
 theta3 = 0
 
 # Set the initial values for the wheel radii
-R1 = random.randint(25, 150)
-R2 = random.randint(25, 150)
-R3 = random.randint(25, 150)
+R1 = random.randint(5, 250)
+R2 = random.randint(5, 250)
+R3 = random.randint(5, 250)
 
 # Set the time interval for generating new random wheel sizes
-GENERATE_NEW_SIZES_INTERVAL = 10000  # milliseconds
+GENERATE_NEW_SIZES_INTERVAL = 5000  # milliseconds
 
 # Set the initial time for generating new random wheel sizes
 next_generate_new_sizes_time = pygame.time.get_ticks() + GENERATE_NEW_SIZES_INTERVAL
@@ -54,7 +54,7 @@ while running:
     # pygame.draw.circle(screen, BLACK, (int(center_x + (R1 + R2) + R3), center_y), R3, line_width)
 
     # Calculate the spirograph coordinates and draw the lines
-    for i in range(1000):
+    for i in range(250):
         x = int(center_x + (R1 + R2) * math.cos(theta1) + R3 * math.cos(theta3))
         y = int(center_y + (R1 + R2) * math.sin(theta1) + R3 * math.sin(theta3))
         theta1 += scale
@@ -82,4 +82,6 @@ while running:
 
 # Quit Pygame
 pygame.quit()
+
+
 
