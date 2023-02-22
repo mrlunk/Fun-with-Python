@@ -2,9 +2,9 @@ This Python code is a basic implementation of the Space Invaders game using Pyga
 
 Here is a step-by-step breakdown of the code:
 
-1 The Pygame library is imported and the random module is also imported.
-2 Pygame is initialized using the init() function.
-3 The screen is set up with a width of 800 pixels and a height of 600 pixels using set_mode().
+1. The Pygame library is imported and the random module is also imported.
+2. Pygame is initialized using the init() function.
+3. The screen is set up with a width of 800 pixels and a height of 600 pixels using set_mode().
 4 The game clock is set up using the Clock() function.
 5 The player's attributes are set up, including the player image, width, height, starting coordinates, and speed.
 6 The bullets' attributes are set up, including the bullet image, width, height, and speed.
