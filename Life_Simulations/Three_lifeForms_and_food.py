@@ -1,5 +1,6 @@
 # this is just a script containing the basics for a life simulation with 3 competing lifeforms and food items...
 # for Edu purposes ;)
+# https://en.wikipedia.org/wiki/Life_simulation_game
 # File : Three_lifeForms_and_food.py 
 # Script by: MrLunk
 # https://github.com/mrlunk/
