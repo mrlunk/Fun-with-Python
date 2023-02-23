@@ -1,6 +1,6 @@
 # this is just a script containing the basics for a life simulation with 3 competing lifeforms and food items...
 # for Edu purposes ;)
-# https://en.wikipedia.org/wiki/Life_simulation_game
+# More info on Life Sim 'games' -> https://en.wikipedia.org/wiki/Life_simulation_game
 # File : Three_lifeForms_and_food.py 
 # Script by: MrLunk
 # https://github.com/mrlunk/
@@ -28,9 +28,9 @@ class LifeForm(pygame.sprite.Sprite):
     def __init__(self, color, x, y):
         super().__init__()
         self.color = color
-        self.energy = 50
-        self.speed = self.energy / 10
-        self.image = pygame.Surface([20, 20])
+        self.energy = 100
+        self.speed = self.energy / 20
+        self.image = pygame.Surface([10, 10]) # -------------------------
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -48,7 +48,7 @@ class LifeForm(pygame.sprite.Sprite):
         for life in life_group:
             if life.color != self.color:
                 distance = ((life.rect.x - self.rect.x) ** 2 + (life.rect.y - self.rect.y) ** 2) ** 0.5
-                if distance < 200:
+                if distance < 100:
                     targets.append(life)
         
         if len(targets) > 0:
@@ -74,12 +74,6 @@ class LifeForm(pygame.sprite.Sprite):
                         target.energy += self.energy
                         self.kill()
         
-        # Replicate if there are no other life forms of the same color nearby
-        elif self.energy > 100:
-            new_life_form = LifeForm(self.color, self.rect.x + 50, self.rect.y + 50)
-            self.energy -= 50
-            life_group.add(new_life_form)
-        
         # Die if energy is too low
         if self.energy < 0:
             self.kill()
@@ -88,7 +82,7 @@ class LifeForm(pygame.sprite.Sprite):
 class Food(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface([10, 10])
+        self.image = pygame.Surface([4, 4])
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -112,7 +106,9 @@ blue_group = pygame.sprite.Group()
 yellow_group = pygame.sprite.Group()
 
 # Create some initial life forms and food
-LifeFormsAmount = 5
+LifeFormsAmount = 10
+FoodItems = 300
+
 for i in range(LifeFormsAmount ):
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
@@ -131,8 +127,7 @@ for i in range(LifeFormsAmount ):
     life_form = LifeForm(YELLOW, x, y)
     all_sprites_group.add(life_form)
     yellow_group.add(life_form)
-# adjust food amount here
-for i in range(5000): 
+for i in range(FoodItems ): 
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     food = Food(x, y)
