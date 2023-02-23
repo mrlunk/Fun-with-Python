@@ -71,7 +71,11 @@ class LifeForm(pygame.sprite.Sprite):
         
         # Update speed and strength based on energy
         self.speed = 2 + (self.energy - INITIAL_ENERGY) // 10
+        if self.speed > 10:
+            self.speed == 10
         self.strength = 2 + (self.energy - INITIAL_ENERGY) // 20
+        if self.strength > 16:
+            self.strength == 16
         
     def find_target(self):
         # Find the nearest food item or enemy
@@ -152,7 +156,7 @@ all_sprites.add(yellow_lifeform)
 lifeforms.add(yellow_lifeform)
 
 # Create the food items
-for i in range(2500): # ------------------------------------------------------------
+for i in range(4000): # ------------------------------------------------------------
     food = Food()
     all_sprites.add(food)
 
@@ -178,7 +182,7 @@ while running:
     pygame.display.flip()
     
     # Set the FPS of the game
-    clock.tick(30)
+    clock.tick(12)
 
 # Quit Pygame
 pygame.quit()
