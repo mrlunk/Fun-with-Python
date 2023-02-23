@@ -1,6 +1,6 @@
 # this is just a script containing the basics for a life simulation with 3 competing lifeforms and food items...
 # for Edu purposes ;)
-# More info on Life Sim 'games' -> https://en.wikipedia.org/wiki/Life_simulation_game
+# https://en.wikipedia.org/wiki/Life_simulation_game
 # File : Three_lifeForms_and_food.py 
 # Script by: MrLunk
 # https://github.com/mrlunk/
@@ -28,8 +28,8 @@ class LifeForm(pygame.sprite.Sprite):
     def __init__(self, color, x, y):
         super().__init__()
         self.color = color
-        self.energy = 100
-        self.speed = self.energy / 20
+        self.energy = 200
+        self.speed = self.energy / 40
         self.image = pygame.Surface([10, 10]) # -------------------------
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
@@ -37,19 +37,19 @@ class LifeForm(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self, food_group, life_group):
-        self.energy -= .1
+        self.energy -= 1
         
         # Move towards food or other life forms of a different color
         targets = []
-        for food in food_group:
-            distance = ((food.rect.x - self.rect.x) ** 2 + (food.rect.y - self.rect.y) ** 2) ** 0.5
-            if distance < 200:
-                targets.append(food)
         for life in life_group:
             if life.color != self.color:
                 distance = ((life.rect.x - self.rect.x) ** 2 + (life.rect.y - self.rect.y) ** 2) ** 0.5
-                if distance < 100:
+                if distance < 650:
                     targets.append(life)
+        for food in food_group:
+            distance = ((food.rect.x - self.rect.x) ** 2 + (food.rect.y - self.rect.y) ** 2) ** 0.5
+            if distance < 50:
+                targets.append(food)
         
         if len(targets) > 0:
             target = min(targets, key=lambda t: ((t.rect.x - self.rect.x) ** 2 + (t.rect.y - self.rect.y) ** 2) ** 0.5)
@@ -62,7 +62,7 @@ class LifeForm(pygame.sprite.Sprite):
                 
                 # If the life form is close enough to food, eat it
                 if isinstance(target, Food) and distance < 20:
-                    self.energy += 10
+                    self.energy += 25
                     target.kill()
                 
                 # If the life form is close enough to a life form of a different color, fight it
@@ -107,7 +107,7 @@ yellow_group = pygame.sprite.Group()
 
 # Create some initial life forms and food
 LifeFormsAmount = 10
-FoodItems = 300
+FoodItems = 3000
 
 for i in range(LifeFormsAmount ):
     x = random.randint(0, WIDTH)
