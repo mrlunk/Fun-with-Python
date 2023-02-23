@@ -30,7 +30,7 @@ class LifeForm(pygame.sprite.Sprite):
         super().__init__()
         self.color = color
         self.energy = INITIAL_ENERGY
-        self.image = pygame.Surface([20, 20])
+        self.image = pygame.Surface([10, 10])
         self.image.fill(color)
         self.rect = self.image.get_rect()
         self.speed = 2
@@ -60,7 +60,7 @@ class LifeForm(pygame.sprite.Sprite):
                     sprite.kill()
         
         # Check for duplication
-        if self.energy >= INITIAL_ENERGY * 2:
+        if self.energy >= INITIAL_ENERGY * 4: # ------------------------------------------------- 3
             self.energy -= INITIAL_ENERGY
             new_lifeform = LifeForm(self.color)
             new_lifeform.rect.x = self.rect.x + random.randint(-20, 20)
@@ -112,11 +112,11 @@ class LifeForm(pygame.sprite.Sprite):
 class Food(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()    
-        self.image = pygame.Surface([10, 10])
+        self.image = pygame.Surface([5, 5]) # ----------------------------------------------- 2
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, WIDTH - 10)
-        self.rect.y = random.randint(0, HEIGHT - 10)
+        self.rect.x = random.randint(0, WIDTH - 20)
+        self.rect.y = random.randint(0, HEIGHT - 20)
         
 # Initialize Pygame
 pygame.init()
@@ -151,7 +151,7 @@ all_sprites.add(yellow_lifeform)
 lifeforms.add(yellow_lifeform)
 
 # Create the food items
-for i in range(1250): # ------------------------------------------------------------
+for i in range(2500): # ------------------------------------------------------------
     food = Food()
     all_sprites.add(food)
 
