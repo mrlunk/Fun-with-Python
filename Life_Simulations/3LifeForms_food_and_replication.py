@@ -4,6 +4,7 @@
 # File : 3LifeForms_food_and_replication.py
 # Script by: MrLunk
 # https://github.com/mrlunk/
+# pip install pygame 
 
 import pygame
 import random
