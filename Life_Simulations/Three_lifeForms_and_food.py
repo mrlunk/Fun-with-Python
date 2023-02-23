@@ -4,6 +4,9 @@
 # Script by: MrLunk
 # https://github.com/mrlunk/
 
+"""
+This script is a basic simulation of three competing life forms and food items using the Pygame library in Python. It simulates the interactions and behaviors of the life forms in a two-dimensional environment.
+"""
 
 import pygame
 import random
@@ -33,18 +36,18 @@ class LifeForm(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self, food_group, life_group):
-        self.energy -= 1
+        self.energy -= .1
         
         # Move towards food or other life forms of a different color
         targets = []
         for food in food_group:
             distance = ((food.rect.x - self.rect.x) ** 2 + (food.rect.y - self.rect.y) ** 2) ** 0.5
-            if distance < 100:
+            if distance < 200:
                 targets.append(food)
         for life in life_group:
             if life.color != self.color:
                 distance = ((life.rect.x - self.rect.x) ** 2 + (life.rect.y - self.rect.y) ** 2) ** 0.5
-                if distance < 100:
+                if distance < 200:
                     targets.append(life)
         
         if len(targets) > 0:
@@ -108,26 +111,27 @@ blue_group = pygame.sprite.Group()
 yellow_group = pygame.sprite.Group()
 
 # Create some initial life forms and food
-for i in range(25):
+LifeFormsAmount = 5
+for i in range(LifeFormsAmount ):
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     life_form = LifeForm(RED, x, y)
     all_sprites_group.add(life_form)
     red_group.add(life_form)
-for i in range(25):
+for i in range(LifeFormsAmount ):
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     life_form = LifeForm(BLUE, x, y)
     all_sprites_group.add(life_form)
     blue_group.add(life_form)
-for i in range(25):
+for i in range(LifeFormsAmount ):
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     life_form = LifeForm(YELLOW, x, y)
     all_sprites_group.add(life_form)
     yellow_group.add(life_form)
 # adjust food amount here
-for i in range(1200): 
+for i in range(5000): 
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     food = Food(x, y)
@@ -153,7 +157,7 @@ while not done:
     pygame.display.flip()
     
     # Set the framerate
-    clock.tick(60)
+    clock.tick(30)
 
 # Quit Pygame
 pygame.quit()
